@@ -10,7 +10,6 @@ public class Game extends Canvas implements Runnable{
     private Thread thread;
     private boolean running = false;
     private Handler handler;
-    private Random r;
 
     public Game(){
 
@@ -20,11 +19,8 @@ public class Game extends Canvas implements Runnable{
         new Window(WIDTH,HEIGHT,"Vidmo Shooter",this);
 
 
-        r = new Random();
-
         handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player));
-        handler.addObject(new Player(WIDTH/2+64,HEIGHT/2-32,ID.Player2));
-
+        handler.addObject(new BasicEnemy(WIDTH/2-32,HEIGHT/2-32,ID.BasicEnemy));
 
     }
 
@@ -95,6 +91,14 @@ public class Game extends Canvas implements Runnable{
         g.dispose();
         bs.show();
 
+    }
+    public static int clamp(int var, int min, int max){
+        if (var >= max)
+            return var = max;
+        else if (var <= min)
+            return var = min;
+        else
+            return var;
     }
 
     public static void main(String args[]){
