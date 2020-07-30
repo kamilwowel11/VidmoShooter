@@ -11,6 +11,7 @@ public class Game extends Canvas implements Runnable{
     private boolean running = false;
     private Handler handler;
     private HUD hud;
+    private Random r;
 
     public Game(){
 
@@ -21,9 +22,10 @@ public class Game extends Canvas implements Runnable{
 
         hud = new HUD();
 
+        r = new Random();
 
-        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player));
-        handler.addObject(new BasicEnemy(WIDTH/2-32,HEIGHT/2-32,ID.BasicEnemy));
+        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player,handler));
+        handler.addObject(new BasicEnemy(r.nextInt(WIDTH),r.nextInt(HEIGHT),ID.BasicEnemy,handler));
 
     }
 
