@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.security.AlgorithmParameterGenerator;
 
 public class Trail extends GameObject{
@@ -40,8 +41,16 @@ public class Trail extends GameObject{
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(makeTrasparent(alpha));
 
-        g.setColor(color);
-        g.fillRect((int)x,(int)y,width,height);
+        //GradientPaint pinkToWhite = new GradientPaint(16, 16, Color.PINK,
+        //        16, 16, Color.WHITE);
+        //g2d.setPaint(pinkToWhite);
+        //g2d.fill(new Rectangle2D.Double((int)x,(int)y,width,height));
+
+
+        g2d.setColor(color);
+        g2d.fillRect((int)x,(int)y,width,height);
+
+
 
         g2d.setComposite(makeTrasparent(1));
 

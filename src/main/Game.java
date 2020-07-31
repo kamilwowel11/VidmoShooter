@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 640, HEIGHT = WIDTH/12*9;
@@ -12,21 +14,41 @@ public class Game extends Canvas implements Runnable{
     private Handler handler;
     private HUD hud;
     private Random r;
-    private Spawner spawner;
+    private Spawner spawn;
+    private Menu menu;
 
-    public Game(){
+
+    public enum STATE {
+        Menu,
+        Game,
+        Help,
+    };
+
+    public STATE gameState = STATE.Menu;
+
+    public Game() {
 
         handler = new Handler();
+        hud = new HUD();
+        spawn = new Spawner(handler,hud);
+        menu = new Menu(this,handler);
+
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
 
         new Window(WIDTH,HEIGHT,"Vidmo Shooter",this);
 
-        hud = new HUD();
-        spawner = new Spawner(handler,hud);
         r = new Random();
 
-        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player,handler));
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH),r.nextInt(HEIGHT),ID.BasicEnemy,handler));
+
+
+        if (gameState == STATE.Game){
+            handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player,handler));
+            handler.addObject(new BasicEnemy(r.nextInt(WIDTH)-50,r.nextInt(HEIGHT)-50,ID.BasicEnemy,handler));
+        }
+
+        //
+        //handler.addObject(new BossEnemy(WIDTH/2-48,-100,ID.BossEnemy,handler));
 
     }
 
@@ -44,6 +66,42 @@ public class Game extends Canvas implements Runnable{
         {
             e.printStackTrace();
         }
+    }
+
+    public void tick(){
+        handler.tick();
+        if (gameState == STATE.Game) {
+            hud.tick();
+            spawn.tick();
+        }
+        else if (gameState == STATE.Menu || gameState == STATE.Help){
+            menu.tick();
+        }
+
+    }
+    public void render(){
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null){
+            this.createBufferStrategy(3);
+            return;
+        }
+        Graphics g = bs.getDrawGraphics();
+
+        g.setColor(Color.black);
+        g.fillRect(0,0,WIDTH,HEIGHT);
+
+
+        handler.render(g);
+        if (gameState == STATE.Game){
+            hud.render(g);
+        } else if (gameState == STATE.Menu || gameState == STATE.Help){
+            menu.render(g);
+        }
+
+
+        g.dispose();
+        bs.show();
+
     }
 
     @Override
@@ -78,36 +136,11 @@ public class Game extends Canvas implements Runnable{
 
     }
 
-    private void tick(){
-        handler.tick();
-        hud.tick();
-        spawner.tick();
-
-    }
-    private void render(){
-        BufferStrategy bs = this.getBufferStrategy();
-        if (bs == null){
-            this.createBufferStrategy(3);
-            return;
-        }
-        Graphics g = bs.getDrawGraphics();
-
-        g.setColor(Color.black);
-        g.fillRect(0,0,WIDTH,HEIGHT);
-
-
-        handler.render(g);
-        hud.render(g);
-
-        g.dispose();
-        bs.show();
-
-    }
     public static float clamp(float var, float min, float max){
         if (var >= max)
-            return var = max;
+            return max;
         else if (var <= min)
-            return var = min;
+            return min;
         else
             return var;
     }
