@@ -9,8 +9,17 @@ import static java.lang.Thread.sleep;
 public class Game extends Canvas implements Runnable{
 
     public static final int WIDTH = 640, HEIGHT = WIDTH/12*9;
+
+
     private Thread thread;
     private boolean running = false;
+    public static boolean paused = false;
+    public int diff=0;
+
+    // 0 = normal
+    // 1 = hard
+
+
     private Handler handler;
     private HUD hud;
     private Random r;
@@ -23,6 +32,7 @@ public class Game extends Canvas implements Runnable{
         Game,
         Help,
         End,
+        Select
     };
 
     public static STATE gameState = STATE.Menu;
@@ -31,7 +41,7 @@ public class Game extends Canvas implements Runnable{
 
         handler = new Handler();
         hud = new HUD();
-        spawn = new Spawner(handler,hud);
+        spawn = new Spawner(handler,hud,this);
         menu = new Menu(this,handler,hud,spawn);
 
         this.addKeyListener(new KeyInput(handler));
@@ -77,21 +87,25 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void tick(){
-        handler.tick();
+
         if (gameState == STATE.Game) {
-            hud.tick();
-            spawn.tick();
+            if (!paused){
+                hud.tick();
+                spawn.tick();
+                handler.tick();
+                if (HUD.HEALTH <=0 )
+                {
+                    HUD.HEALTH =100;
+                    gameState = STATE.End;
+                    handler.object.clear();
 
-            if (HUD.HEALTH <=0 )
-            {
-                HUD.HEALTH =100;
-                gameState = STATE.End;
-                handler.object.clear();
-
+                }
             }
+
         }
-        else if (gameState == STATE.Menu || gameState == STATE.Help || gameState==STATE.End){
+        else if (gameState == STATE.Menu || gameState == STATE.Help || gameState==STATE.End || gameState==STATE.Select){
             menu.tick();
+            handler.tick();
         }
 
 
@@ -109,9 +123,13 @@ public class Game extends Canvas implements Runnable{
 
 
         handler.render(g);
+
+        if (paused){
+            g.drawString("PAUSED", 100,100);
+        }
         if (gameState == STATE.Game){
             hud.render(g);
-        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState==STATE.End){
+        } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState==STATE.End || gameState==STATE.Select){
             menu.render(g);
         }
 

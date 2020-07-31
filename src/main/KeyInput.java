@@ -33,6 +33,7 @@ public class KeyInput extends KeyAdapter {
             }
         }
         if (key == KeyEvent.VK_ESCAPE) System.exit(1);
+        if (key == KeyEvent.VK_P) Game.paused = !Game.paused;
     }
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
