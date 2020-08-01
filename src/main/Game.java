@@ -25,6 +25,7 @@ public class Game extends Canvas implements Runnable{
     private Random r;
     private Spawner spawn;
     private Menu menu;
+    private Shop shop;
 
 
     public enum STATE {
@@ -32,7 +33,8 @@ public class Game extends Canvas implements Runnable{
         Game,
         Help,
         End,
-        Select
+        Select,
+        Shop
     };
 
     public static STATE gameState = STATE.Menu;
@@ -41,10 +43,11 @@ public class Game extends Canvas implements Runnable{
 
         handler = new Handler();
         hud = new HUD();
+        shop = new Shop(handler);
         spawn = new Spawner(handler,hud,this);
         menu = new Menu(this,handler,hud,spawn);
 
-        this.addKeyListener(new KeyInput(handler));
+        this.addKeyListener(new KeyInput(handler,this));
         this.addMouseListener(menu);
 
         new Window(WIDTH,HEIGHT,"Vidmo Shooter",this);
@@ -122,15 +125,19 @@ public class Game extends Canvas implements Runnable{
         g.fillRect(0,0,WIDTH,HEIGHT);
 
 
-        handler.render(g);
+
 
         if (paused){
             g.drawString("PAUSED", 100,100);
         }
         if (gameState == STATE.Game){
             hud.render(g);
+            handler.render(g);
         } else if (gameState == STATE.Menu || gameState == STATE.Help || gameState==STATE.End || gameState==STATE.Select){
             menu.render(g);
+            handler.render(g);
+        } else if (gameState == STATE.Shop){
+            shop.render(g);
         }
 
 

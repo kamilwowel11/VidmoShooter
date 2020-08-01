@@ -25,6 +25,7 @@ public class HUD {
 
         g.drawString("Score: "+ score,15,64);
         g.drawString("Level: "+ level,15,78);
+        g.drawString("Space of Shop: ",15,92);
     }
 
     public void score(int score){
