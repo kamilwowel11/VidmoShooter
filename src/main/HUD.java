@@ -5,24 +5,30 @@ import java.awt.*;
 public class HUD {
 
     public static float HEALTH = 100;
+    public int bounds = 0;
     Font fnt = new Font("arial", 1, 10);
 
     private int level = 1;
     public int score = 0;
 
     public void tick() {
-        HEALTH = Game.clamp(HEALTH, 0, 100);
+        HEALTH = Game.clamp(HEALTH, 0, 100+bounds);
 
         score++;
     }
 
     public void render(Graphics g) {
         g.setColor(Color.gray);
-        g.fillRect(15, 15, 200, 32);
-        g.setColor(Color.getHSBColor((1f * HEALTH) / 360, 1f, 1f));
+        g.fillRect(15, 15, 200+bounds, 32);
+        if (HEALTH < 200){
+            g.setColor(Color.getHSBColor((1f * HEALTH) / 360, 1f, 1f));
+        }else{
+            g.setColor(Color.getHSBColor((1f * HEALTH) / 720, 1f, 1f));
+        }
+
         g.fillRect(15, 15, (int) HEALTH * 2, 32);
         g.setColor(Color.white);
-        g.drawRect(15, 15, 200, 32);
+        g.drawRect(15, 15, 200+bounds, 32);
 
         g.setFont(fnt);
 

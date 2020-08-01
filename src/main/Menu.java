@@ -12,15 +12,17 @@ public class Menu extends MouseAdapter {
     public Random r = new Random();
     private HUD hud;
     private Spawner spawn;
+    private Shop shop;
     Font fnt = new Font("arial", 1, 50);
     Font fnt2 = new Font("arial", 1, 30);
     Font fnt3 = new Font("arial", 1, 15);
 
-    public Menu(Game game, Handler handler, HUD hud, Spawner spawn) {
+    public Menu(Game game, Handler handler, HUD hud, Spawner spawn,Shop shop) {
         this.game = game;
         this.handler = handler;
         this.hud = hud;
         this.spawn = spawn;
+        this.shop = shop;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -78,18 +80,22 @@ public class Menu extends MouseAdapter {
         }
         //Try again button and menu button
         if (game.gameState == Game.STATE.End) {
+            //Try again
             if (mouseOver(mx, my, 210, 350, 200, 64)) {
                 game.gameState = Game.STATE.Select;
                 hud.setLevel(1);
                 hud.setScore(0);
                 spawn.setScoreKeep(0);
+                shop.resetShop();
                 return;
             }
+            //Menu button
             if (mouseOver(mx, my, 210, 250, 200, 64)) {
                 game.gameState = Game.STATE.Menu;
                 hud.setLevel(1);
                 hud.setScore(0);
                 spawn.setScoreKeep(0);
+                shop.resetShop();
                 return;
             }
         }

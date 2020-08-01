@@ -26,6 +26,7 @@ public class Game extends Canvas implements Runnable {
     private Spawner spawn;
     private Menu menu;
     private Shop shop;
+    private MouseInputGame mouseInputGame;
 
 
     public enum STATE {
@@ -47,11 +48,13 @@ public class Game extends Canvas implements Runnable {
         hud = new HUD();
         shop = new Shop(handler, hud);
         spawn = new Spawner(handler, hud, this);
-        menu = new Menu(this, handler, hud, spawn);
+        menu = new Menu(this, handler, hud, spawn,shop);
+        mouseInputGame = new MouseInputGame(this,handler);
 
         this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);
         this.addMouseListener(shop);
+        this.addMouseListener(mouseInputGame);
 
         new Window(WIDTH, HEIGHT, "Vidmo Shooter", this);
 
@@ -60,6 +63,7 @@ public class Game extends Canvas implements Runnable {
 
         if (gameState == STATE.Game) {
             handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
+            mouseInputGame.findPlayer();
             handler.clearEnemies();
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH) - 50, r.nextInt(HEIGHT) - 50, ID.BasicEnemy, handler));
         } else if (gameState == STATE.Menu) {
