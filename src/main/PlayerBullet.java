@@ -5,10 +5,12 @@ import java.awt.*;
 public class PlayerBullet extends GameObject {
 
     Handler handler;
+    HUD hud;
 
-    PlayerBullet(int x ,int y, ID id,int life, Handler handler){
+    PlayerBullet(int x ,int y, ID id,int life, Handler handler,HUD hud){
         super(x,y,id,life);
         this.handler=handler;
+        this.hud = hud;
     }
     public void tick(){
        x += velX;
@@ -31,8 +33,8 @@ public class PlayerBullet extends GameObject {
             GameObject tempObject = handler.object.get(i);
             if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.SmartEnemy || tempObject.getId() == ID.BossEnemy) {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    tempObject.setLife(tempObject.getLife() - 10);
-                    if (tempObject.getLife() == 0){
+                    tempObject.setLife(tempObject.getLife() - hud.power);
+                    if (tempObject.getLife() <= 0 ){
                         handler.removeObject(tempObject);
                         i--;
                     }
@@ -40,5 +42,4 @@ public class PlayerBullet extends GameObject {
             }
         }
     }
-
-    }
+}

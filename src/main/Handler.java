@@ -14,10 +14,12 @@ public class Handler {
             //GameObject tempObject = object.get(i);
             //tempObject.tick();
             object.get(i).tick();
-            tempBullet = object.get(i);
-            if (tempBullet.id == ID.PlayerBullet){
-                if (tempBullet.getY() < 0 || tempBullet.getY() > Game.HEIGHT || tempBullet.getX() < 0 || tempBullet.getX() > Game.WIDTH){
-                    object.remove(tempBullet);
+            if (object != null) {
+                tempBullet = object.get(i);
+                if (tempBullet.id == ID.PlayerBullet) {
+                    if (tempBullet.getY() < 0 || tempBullet.getY() > Game.HEIGHT || tempBullet.getX() < 0 || tempBullet.getX() > Game.WIDTH) {
+                        object.remove(tempBullet);
+                    }
                 }
             }
 

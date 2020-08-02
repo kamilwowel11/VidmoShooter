@@ -6,6 +6,8 @@ public class HUD {
 
     public static float HEALTH = 100;
     public int bounds = 0;
+    public int power = 10;
+    public int bulletSpeed = 10;
     Font fnt = new Font("arial", 1, 10);
 
     private int level = 1;
@@ -55,5 +57,21 @@ public class HUD {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public int getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    public void setBulletSpeed(int bulletSpeed) {
+        this.bulletSpeed = bulletSpeed;
     }
 }

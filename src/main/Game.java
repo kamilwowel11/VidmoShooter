@@ -43,13 +43,12 @@ public class Game extends Canvas implements Runnable {
     public static STATE gameState = STATE.Menu;
 
     public Game() {
-
         handler = new Handler();
         hud = new HUD();
         shop = new Shop(handler, hud);
         spawn = new Spawner(handler, hud, this);
         menu = new Menu(this, handler, hud, spawn,shop);
-        mouseInputGame = new MouseInputGame(this,handler);
+        mouseInputGame = new MouseInputGame(this,handler,hud);
 
         this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);

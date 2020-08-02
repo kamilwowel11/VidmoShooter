@@ -98,30 +98,31 @@ public class Shop extends MouseAdapter {
                     hud.HEALTH = (100+ (hud.bounds/2));
                 }
             }
-            //Box 4 Upgrade Attack-Speed
+            //Box 4 Upgrade Bullet-Speed
             if (mouseOver(mx, my, 100, 230, 100, 80)) {
                 if (hud.getScore() >= B4){
                     hud.setScore(hud.getScore()-B4);
-                    B4+=1000;
+                    hud.setBulletSpeed(hud.getBulletSpeed() + 1);
+                    B4+=10;
                 }
             }
             //Box 5 Upgrade Amount of bullets
             if (mouseOver(mx, my, 250, 230, 100, 80)) {
                 if (hud.getScore() >= B5){
                     hud.setScore(hud.getScore()-B5);
-                    B5+=1000;
+                    B5+=10;
                 }
             }
             //Box 6 Upgrade Power of bullets
             if (mouseOver(mx, my, 400, 230, 100, 80)) {
                 if (hud.getScore() >= B6){
                     hud.setScore(hud.getScore()-B6);
-                    B6+=1000;
+                    hud.setPower(hud.getPower() + 5);
+                    B6+=10;
                 }
             }
         }
     }
-
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
         if (mx > x && mx < x + width) {
             if (my > y && my < y + height) {

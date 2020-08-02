@@ -6,12 +6,14 @@ import java.awt.event.MouseEvent;
 public class MouseInputGame extends MouseAdapter {
     private Game game;
     private Handler handler;
+    private HUD hud;
     GameObject tempPlayer = null;
 
 
-    MouseInputGame(Game game, Handler handler) {
+    MouseInputGame(Game game, Handler handler,HUD hud) {
         this.handler = handler;
         this.game = game;
+        this.hud=hud;
     }
 
     public void findPlayer() {
@@ -29,14 +31,14 @@ public class MouseInputGame extends MouseAdapter {
             int my = e.getY();
             //System.out.println("mx: " + mx + " my: " + my + " tempPlayer: " + tempPlayer);
             if (tempPlayer != null) {
-                    GameObject tempBullet = new PlayerBullet((int) tempPlayer.x + 16, (int) tempPlayer.y + 16, ID.PlayerBullet,100,handler);
+                    GameObject tempBullet = new PlayerBullet((int) tempPlayer.x + 16, (int) tempPlayer.y + 16, ID.PlayerBullet,100,handler,hud);
                     handler.addObject(tempBullet);
 
                     float angle = (float) Math.atan2(my - tempPlayer.y - 16, mx - tempPlayer.x - 16);
-                    int bulletVel = 10;
 
-                    tempBullet.velX = (float) ((bulletVel) * Math.cos(angle));
-                    tempBullet.velY = (float) ((bulletVel) * Math.sin(angle));
+
+                    tempBullet.velX = (float) ((hud.bulletSpeed) * Math.cos(angle));
+                    tempBullet.velY = (float) ((hud.bulletSpeed) * Math.sin(angle));
 
             } else {
                 findPlayer();
