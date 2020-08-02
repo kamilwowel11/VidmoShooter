@@ -24,28 +24,29 @@ public class MouseInputGame extends MouseAdapter {
     }
 
     public void mousePressed(MouseEvent e) {
-        if (game.gameState == Game.STATE.Game) {
+        if (Game.gameState == Game.STATE.Game) {
             int mx = e.getX();
             int my = e.getY();
-            System.out.println("mx: " + mx + " my: " + my + " tempPlayer: " + tempPlayer);
+            //System.out.println("mx: " + mx + " my: " + my + " tempPlayer: " + tempPlayer);
             if (tempPlayer != null) {
+                    GameObject tempBullet = new PlayerBullet((int) tempPlayer.x + 16, (int) tempPlayer.y + 16, ID.PlayerBullet,100,handler);
+                    handler.addObject(tempBullet);
 
-                GameObject tempBullet = new PlayerBullet((int) tempPlayer.x + 16, (int) tempPlayer.y + 16, ID.PlayerBullet);
-                handler.addObject(tempBullet);
+                    float angle = (float) Math.atan2(my - tempPlayer.y - 16, mx - tempPlayer.x - 16);
+                    int bulletVel = 10;
 
-                float angle = (float) Math.atan2(my - tempPlayer.y-16, mx - tempPlayer.x-16);
-                int bulletVel = 10;
-
-                tempBullet.velX = (float) ((bulletVel) * Math.cos(angle));
-                tempBullet.velY = (float) ((bulletVel) * Math.sin(angle));
+                    tempBullet.velX = (float) ((bulletVel) * Math.cos(angle));
+                    tempBullet.velY = (float) ((bulletVel) * Math.sin(angle));
 
             } else {
                 findPlayer();
             }
         }
-
+    }
+    public void mouseReleased(MouseEvent e){
 
     }
+
 
 
 }

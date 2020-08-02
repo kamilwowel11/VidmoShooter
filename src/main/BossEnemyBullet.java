@@ -6,12 +6,12 @@ import java.util.Random;
 public class BossEnemyBullet extends GameObject {
 
     private Handler handler;
-    private Random r = new Random();
 
-    public BossEnemyBullet(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+    public BossEnemyBullet(int x, int y, ID id,int life, Handler handler) {
+        super(x, y, id,life);
         this.handler = handler;
         //velX = (r.nextInt(10)-5);
+        Random r = new Random();
         velX = (r.nextInt(5 - -5) + -5);
         velY = 5;
     }
@@ -26,7 +26,7 @@ public class BossEnemyBullet extends GameObject {
 
         if (y >= Game.HEIGHT) handler.removeObject(this);
 
-        handler.addObject(new Trail(x, y, ID.Trail, Color.red, 8, 8, 0.02f, handler));
+        handler.addObject(new Trail(x, y, ID.Trail,100, Color.red, 8, 8, 0.02f, handler));
     }
 
 

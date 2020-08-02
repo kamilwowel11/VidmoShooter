@@ -49,17 +49,17 @@ public class Menu extends MouseAdapter {
             //Normal button
             if (mouseOver(mx, my, 210, 150, 200, 64)) {
                 game.gameState = Game.STATE.Game;
-                handler.addObject(new Player(game.WIDTH / 2 - 32, game.HEIGHT / 2 - 32, ID.Player, handler));
+                handler.addObject(new Player(game.WIDTH / 2 - 32, game.HEIGHT / 2 - 32, ID.Player,100, handler));
                 handler.clearEnemies();
-                handler.addObject(new BasicEnemy(r.nextInt(game.WIDTH) - 50, r.nextInt(game.HEIGHT) - 50, ID.BasicEnemy, handler));
+                handler.addObject(new BasicEnemy(r.nextInt(game.WIDTH) - 50, r.nextInt(game.HEIGHT) - 50, ID.BasicEnemy,100, handler));
                 game.diff = 0;
             }
             //Hard Button
             if (mouseOver(mx, my, 210, 250, 200, 64)) {
                 game.gameState = Game.STATE.Game;
-                handler.addObject(new Player(game.WIDTH / 2 - 32, game.HEIGHT / 2 - 32, ID.Player, handler));
+                handler.addObject(new Player(game.WIDTH / 2 - 32, game.HEIGHT / 2 - 32, ID.Player,100, handler));
                 handler.clearEnemies();
-                handler.addObject(new HardEnemy(r.nextInt(game.WIDTH) - 50, r.nextInt(game.HEIGHT) - 50, ID.BasicEnemy, handler));
+                handler.addObject(new HardEnemy(r.nextInt(game.WIDTH) - 50, r.nextInt(game.HEIGHT) - 50, ID.BasicEnemy,100, handler));
                 game.diff = 1;
             }
             //Back Button

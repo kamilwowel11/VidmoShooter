@@ -6,8 +6,9 @@ public class BasicEnemy extends GameObject {
 
     private Handler handler;
 
-    public BasicEnemy(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+
+    public BasicEnemy(int x, int y, ID id,int life, Handler handler) {
+        super(x, y, id,life);
         this.handler = handler;
 
 
@@ -26,7 +27,7 @@ public class BasicEnemy extends GameObject {
         if (y <= 0 || y >= Game.HEIGHT - 48) velY *= -1;
         if (x <= 0 || x >= Game.WIDTH - 32) velX *= -1;
 
-        handler.addObject(new Trail(x, y, ID.Trail, Color.red, 16, 16, 0.02f, handler));
+        handler.addObject(new Trail(x, y, ID.Trail,100, Color.red, 16, 16, 0.02f, handler));
     }
 
 

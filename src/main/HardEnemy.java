@@ -9,8 +9,8 @@ public class HardEnemy extends GameObject {
 
     private Random r = new Random();
 
-    public HardEnemy(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+    public HardEnemy(int x, int y, ID id,int life, Handler handler) {
+        super(x, y, id,life);
         this.handler = handler;
 
 
@@ -35,7 +35,7 @@ public class HardEnemy extends GameObject {
             else velX = (r.nextInt(7) + 1) * -1;
         }
 
-        handler.addObject(new Trail(x, y, ID.Trail, Color.PINK, 16, 16, 0.02f, handler));
+        handler.addObject(new Trail(x, y, ID.Trail,100, Color.PINK, 16, 16, 0.02f, handler));
     }
 
 

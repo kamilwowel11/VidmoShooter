@@ -62,13 +62,13 @@ public class Game extends Canvas implements Runnable {
 
 
         if (gameState == STATE.Game) {
-            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
+            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player,0, handler));
             mouseInputGame.findPlayer();
             handler.clearEnemies();
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH) - 50, r.nextInt(HEIGHT) - 50, ID.BasicEnemy, handler));
+            handler.addObject(new BasicEnemy(r.nextInt(WIDTH) - 50, r.nextInt(HEIGHT) - 50, ID.BasicEnemy,100, handler));
         } else if (gameState == STATE.Menu) {
             for (int i = 0; i < 10; i++) {
-                handler.addObject(new MenuParticles(r.nextInt(WIDTH) - 50, r.nextInt(HEIGHT) - 50, ID.MenuParticles, handler));
+                handler.addObject(new MenuParticles(r.nextInt(WIDTH) - 50, r.nextInt(HEIGHT) - 50, ID.MenuParticles,0, handler));
             }
 
         }
@@ -127,7 +127,7 @@ public class Game extends Canvas implements Runnable {
 
 
         if (paused) {
-            Font fnt = new Font("arial", 1, 50);
+            Font fnt = new Font("arial", Font.BOLD, 50);
             g.setFont(fnt);
             g.drawString("PAUSED", 25, 25);
         }

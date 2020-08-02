@@ -7,8 +7,8 @@ public class SmartEnemy extends GameObject {
     private Handler handler;
     private GameObject player;
 
-    public SmartEnemy(int x,int y,ID id,Handler handler){
-        super(x,y,id);
+    public SmartEnemy(int x,int y,ID id,int life,Handler handler){
+        super(x,y,id,life);
         this.handler= handler;
 
         for(int i=0; i<handler.object.size();i++){
@@ -31,7 +31,7 @@ public class SmartEnemy extends GameObject {
         velX = (float)((-1.0/distance)* diffX);
         velY = (float)((-1.0/distance)* diffY);
 
-        handler.addObject(new Trail(x,y,ID.Trail,Color.YELLOW,16,16,0.02f,handler));
+        handler.addObject(new Trail(x,y,ID.Trail,100,Color.YELLOW,16,16,0.02f,handler));
     }
 
 

@@ -6,8 +6,8 @@ public class Player extends GameObject {
 
     Handler handler;
 
-    public Player(int x, int y, ID id, Handler handler) {
-        super(x, y, id);
+    public Player(int x, int y, ID id,int life, Handler handler) {
+        super(x, y, id,life);
         this.handler = handler;
     }
 
@@ -35,8 +35,6 @@ public class Player extends GameObject {
                 }
             }
         }
-
-
     }
 
 

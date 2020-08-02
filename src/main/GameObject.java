@@ -7,11 +7,14 @@ public abstract class GameObject {
     protected float x, y;
     protected ID id;
     protected float velX, velY; //velocity
+    protected int life;
 
-    public GameObject(float x, float y, ID id) {
+
+    public GameObject(float x, float y, ID id, int life) {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.life = life;
     }
 
     public abstract void tick();
@@ -58,5 +61,13 @@ public abstract class GameObject {
 
     public float getVelY() {
         return velY;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 }
