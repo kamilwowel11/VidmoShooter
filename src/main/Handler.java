@@ -14,7 +14,7 @@ public class Handler {
             //GameObject tempObject = object.get(i);
             //tempObject.tick();
             object.get(i).tick();
-            if (object != null) {
+            if (object.get(i) != null) {
                 tempBullet = object.get(i);
                 if (tempBullet.id == ID.PlayerBullet) {
                     if (tempBullet.getY() < 0 || tempBullet.getY() > Game.HEIGHT || tempBullet.getX() < 0 || tempBullet.getX() > Game.WIDTH) {
