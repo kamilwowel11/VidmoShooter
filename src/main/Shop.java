@@ -7,18 +7,20 @@ import java.awt.event.MouseEvent;
 public class Shop extends MouseAdapter {
     Handler handler;
     HUD hud;
-    public int B1 = 10;
-    public int B2 = 10;
-    public int B3 = 10;
-    public int B4 = 10;
-    public int B5 = 10;
-    public int B6 = 10;
+    Spawner spawn;
+    public int B1 = 250;
+    public int B2 = 500;
+    public int B3 = 500;
+    public int B4 = 150;
+    public int B5 = 700;
+    public int B6 = 350;
     Font fnt1 = new Font("arial", 0, 48);
     Font fnt2 = new Font("arial", 0, 12);
 
-    public Shop(Handler handler, HUD hud) {
+    public Shop(Handler handler, HUD hud, Spawner spawn) {
         this.handler = handler;
         this.hud = hud;
+        this.spawn=spawn;
     }
 
     public void render(Graphics g) {
@@ -49,23 +51,32 @@ public class Shop extends MouseAdapter {
         Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
         g2d.setStroke(dashed);
 
-        //Box 4 Upgrade Attack-Speed
-        g2d.setFont(fnt2);
-        g2d.drawString("Upgrade Attack", 110, 250);
-        g2d.drawString("Speed", 110, 270);
-        g2d.drawString("Cost: " + B4, 110, 290);
-        g2d.drawRect(100, 230, 100, 80);
+        if (spawn.passFirstBoss) {
 
-        //Box 5 Upgrade Amount of bullets
-        g2d.drawString("Upgrade", 260, 250);
-        g2d.drawString("Amount", 260, 270);
-        g2d.drawString("Cost: " + B5, 260, 290);
-        g2d.drawRect(250, 230, 100, 80);
+            //Box 4 Upgrade Attack-Speed
+            g2d.setFont(fnt2);
+            g2d.drawString("Upgrade Attack", 110, 250);
+            g2d.drawString("Speed", 110, 270);
+            g2d.drawString("Cost: " + B4, 110, 290);
+            g2d.drawRect(100, 230, 100, 80);
 
-        //Box 6 Upgrade Power of bullets
-        g2d.drawString("Upgrade Power", 410, 250);
-        g2d.drawString("Cost: " + B6, 410, 270);
-        g2d.drawRect(400, 230, 100, 80);
+            //Box 5 Upgrade Amount of bullets
+            g2d.drawString("Upgrade", 260, 250);
+            g2d.drawString("Amount", 260, 270);
+            g2d.drawString("Cost: " + B5, 260, 290);
+            g2d.drawRect(250, 230, 100, 80);
+
+            //Box 6 Upgrade Power of bullets
+            g2d.drawString("Upgrade Power", 410, 250);
+            g2d.drawString("Cost: " + B6, 410, 270);
+            g2d.drawRect(400, 230, 100, 80);
+        } else{
+
+            g2d.drawRect(100, 230, 100, 80);
+            g2d.drawRect(250, 230, 100, 80);
+            g2d.drawRect(400, 230, 100, 80);
+
+        }
 
     }
 
@@ -78,7 +89,7 @@ public class Shop extends MouseAdapter {
             if (mouseOver(mx, my, 100, 100, 100, 80)) {
                 if (hud.getScore() >= B1){
                     hud.setScore(hud.getScore()-B1);
-                    B1+=10;
+                    B1+=150;
                     hud.bounds +=20;
                     hud.HEALTH = (100+ (hud.bounds/2));
                 }
@@ -87,7 +98,7 @@ public class Shop extends MouseAdapter {
             if (mouseOver(mx, my, 250, 100, 100, 80)) {
                 if (hud.getScore() >= B2){
                     hud.setScore(hud.getScore()-B2);
-                    B2+=10;
+                    B2+=50;
                     handler.speed++;
                 }
             }
@@ -98,27 +109,29 @@ public class Shop extends MouseAdapter {
                     hud.HEALTH = (100+ (hud.bounds/2));
                 }
             }
-            //Box 4 Upgrade Bullet-Speed
-            if (mouseOver(mx, my, 100, 230, 100, 80)) {
-                if (hud.getScore() >= B4){
-                    hud.setScore(hud.getScore()-B4);
-                    hud.setBulletSpeed(hud.getBulletSpeed() + 1);
-                    B4+=10;
+            if (spawn.passFirstBoss) {
+                //Box 4 Upgrade Bullet-Speed
+                if (mouseOver(mx, my, 100, 230, 100, 80)) {
+                    if (hud.getScore() >= B4) {
+                        hud.setScore(hud.getScore() - B4);
+                        hud.setBulletSpeed(hud.getBulletSpeed() + 1);
+                        B4 += 150;
+                    }
                 }
-            }
-            //Box 5 Upgrade Amount of bullets
-            if (mouseOver(mx, my, 250, 230, 100, 80)) {
-                if (hud.getScore() >= B5){
-                    hud.setScore(hud.getScore()-B5);
-                    B5+=10;
+                //Box 5 Upgrade Amount of bullets
+                if (mouseOver(mx, my, 250, 230, 100, 80)) {
+                    if (hud.getScore() >= B5) {
+                        hud.setScore(hud.getScore() - B5);
+                        B5 += 100;
+                    }
                 }
-            }
-            //Box 6 Upgrade Power of bullets
-            if (mouseOver(mx, my, 400, 230, 100, 80)) {
-                if (hud.getScore() >= B6){
-                    hud.setScore(hud.getScore()-B6);
-                    hud.setPower(hud.getPower() + 5);
-                    B6+=10;
+                //Box 6 Upgrade Power of bullets
+                if (mouseOver(mx, my, 400, 230, 100, 80)) {
+                    if (hud.getScore() >= B6) {
+                        hud.setScore(hud.getScore() - B6);
+                        hud.setPower(hud.getPower() + 5);
+                        B6 += 100;
+                    }
                 }
             }
         }
@@ -131,12 +144,12 @@ public class Shop extends MouseAdapter {
         } else return false;
     }
     public void resetShop(){
-        B1 = 10;
-        B2 = 10;
-        B3 = 10;
-        B4 = 10;
-        B5 = 10;
-        B6 = 10;
+        B1 = 250;
+        B2 = 500;
+        B3 = 500;
+        B4 = 150;
+        B5 = 700;
+        B6 = 350;
         handler.speed = 5;
         hud.HEALTH = 100;
         hud.bounds = 0;

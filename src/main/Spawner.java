@@ -9,6 +9,7 @@ public class Spawner {
     private Game game;
     private boolean test = false;
     private int roundTime = 300;
+    public boolean passFirstBoss = false;
 
 
     public int scoreKeep = 0;
@@ -46,6 +47,8 @@ public class Spawner {
                     if (hud.getLevel() == 6) {
                     }
                     if (hud.getLevel() == 7) {
+                        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.BasicEnemy,100, handler));
+                        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.BasicEnemy,100, handler));
                     }
                     if (hud.getLevel() == 8) {
                         handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.FastEnemy,50, handler));
@@ -57,13 +60,18 @@ public class Spawner {
                         handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.SmartEnemy,125, handler));
                     }
                     if (hud.getLevel() == 10) {
-                        roundTime = 1000;
+                        roundTime = 1250;
                         handler.clearEnemies();
                         handler.addObject(new BossEnemy(Game.WIDTH / 2 - 48, -100, ID.BossEnemy,300, handler));
+
                     }
                     if (hud.getLevel() == 11) {
-                        roundTime = 250;
-                        handler.clearEnemies();
+                        passFirstBoss = true;
+                        roundTime = 300;
+                        handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.SmartEnemy,125, handler));
+                        handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.SmartEnemy,125, handler));
+                        handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.FastEnemy,50, handler));
+                        handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.FastEnemy,50, handler));
                     }
                     if (hud.getLevel() == 12) {
 
@@ -156,7 +164,9 @@ public class Spawner {
             {
              // do testowania jednego poziomu kodua
                 if (hud.getLevel() == 2) {
-                    handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 10), r.nextInt(Game.HEIGHT - 10), ID.BasicEnemy,100, handler));
+                    roundTime = 2000;
+                    handler.clearEnemies();
+                    handler.addObject(new BossEnemy(Game.WIDTH / 2 - 48, -100, ID.BossEnemy,400, handler));
                 }
             }
 

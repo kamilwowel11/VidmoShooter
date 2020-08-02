@@ -45,8 +45,8 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         handler = new Handler();
         hud = new HUD();
-        shop = new Shop(handler, hud);
         spawn = new Spawner(handler, hud, this);
+        shop = new Shop(handler, hud,spawn);
         menu = new Menu(this, handler, hud, spawn,shop);
         mouseInputGame = new MouseInputGame(this,handler,hud);
 
